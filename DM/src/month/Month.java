@@ -36,7 +36,7 @@ public class Month {
 				/*---------------------------------------------------*/
 				case 1://Dates
 					String m = columns[i].split("/")[1];
-					bw.write(m + ",WARRANTS");//test data用
+					bw.write(m + ",WARRANTS");//為了符合test data用
 					if(!ls_dates.contains(m))
 						ls_dates.add(m);
 					break;
