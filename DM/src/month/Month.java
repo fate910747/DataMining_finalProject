@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class Month {
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("train.csv"));
+		BufferedReader br = new BufferedReader(new FileReader("test.csv"));
 		
 		/*-----------------------------------------------------------*/
 		String name = "month";//改此，此為檔案名稱
-		BufferedWriter bw = new BufferedWriter(new FileWriter(name + ".csv"));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(name + "_test.csv"));
 		/*-----------------------------------------------------------*/
 		
 		//ArrayList用來寫出arff檔的header
@@ -30,22 +30,23 @@ public class Month {
 			line = line.replaceAll(" ", "_");
 			String[] columns = line.split(",");
 			
-			for(int i = 0; i < columns.length; i++){
+			for(int i = 1; i < columns.length; i++){
 				switch(i){
+				
 				/*---------------------------------------------------*/
-				case 0://Dates
+				case 1://Dates
 					String m = columns[i].split("/")[1];
-					bw.write(m);
+					bw.write(m + ",WARRANTS");//test data用
 					if(!ls_dates.contains(m))
 						ls_dates.add(m);
 					break;
 				/*---------------------------------------------------*/
 					
-				case 1://Category
+				/*case 2://Category
 					bw.write(columns[i]);
 					if(!ls_category.contains(columns[i]))
 						ls_category.add(columns[i]);
-					break;
+					break;*/
 					
 				case 2://DayofWeek
 					bw.write(columns[i]);
@@ -73,7 +74,7 @@ public class Month {
 					bw.write(columns[i]);
 					break;
 					
-				default:
+				default:					
 					System.out.println(i + line + "!!!! Something wrong!");
 					break;
 				}
@@ -87,6 +88,8 @@ public class Month {
 		
 		//寫header
 		bw.write("\n@relation " + name + "\n\n");
+		
+		bw.write("@attribute ID numeric\n");
 		
 		bw.write("@attribute Dates {");
 		for(String each : ls_dates)
@@ -111,10 +114,10 @@ public class Month {
 		bw.write("@attribute X numeric\n");
 		bw.write("@attribute Y numeric\n\n");
 		
-		bw.write("@attribute Category {");
+		/*bw.write("@attribute Category {");
 		for(String each : ls_category)
 			bw.write("," + each);
-		bw.write("}\n");
+		bw.write("}\n");*/
 		
 		bw.write("@data\n");
 		

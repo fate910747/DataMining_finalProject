@@ -1,0 +1,122 @@
+package month;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Month {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("train.csv"));
+		
+		/*-----------------------------------------------------------*/
+		BufferedWriter bw = new BufferedWriter(new FileWriter("month.csv"));
+		/*-----------------------------------------------------------*/
+		
+		//ArrayList用來寫出arff檔的header
+		ArrayList<String> ls_dates = new ArrayList<String>();
+		ArrayList<String> ls_category = new ArrayList<String>();
+		ArrayList<String> ls_dayofweek = new ArrayList<String>();
+		ArrayList<String> ls_pddistrict = new ArrayList<String>();
+		ArrayList<String> ls_address = new ArrayList<String>();
+		
+		String line =br.readLine();
+		bw.write("Dates,Category,DayOfWeek,PdDistrict,Address,X,Y\n");
+		while(br.ready()){
+			line = br.readLine();//each instance/row.
+			String[] columns = line.split(",");
+			
+			for(int i = 0; i < columns.length; i++){
+				switch(i){
+				/*---------------------------------------------------*/
+				case 0://Dates
+					String m = columns[i].split("/")[1];
+					bw.write(m);
+					if(!ls_dates.contains(m))
+						ls_dates.add(m);
+					break;
+				/*---------------------------------------------------*/
+					
+				case 1://Categroy
+					bw.write(columns[i]);
+					if(!ls_category.contains(columns[i]))
+						ls_category.add(columns[i]);
+					break;
+					
+				case 2://DayofWeek
+					bw.write(columns[i]);
+					if(!ls_dayofweek.contains(columns[i]))
+						ls_dayofweek.add(columns[i]);
+					break;
+					
+				case 3://PdDistrict
+					bw.write(columns[i]);
+					if(!ls_pddistrict.contains(columns[i]))
+						ls_pddistrict.add(columns[i]);
+					break;
+					
+				case 4://Address
+					bw.write(columns[i]);
+					if(!ls_address.contains(columns[i]))
+						ls_address.add(columns[i]);
+					break;
+					
+				case 5://X
+					bw.write(columns[i]);
+					break;
+					
+				case 6://Y
+					bw.write(columns[i]);
+					break;
+					
+				default:
+					System.out.println(i + line + "!!!! Something wrong!");
+					break;
+				}
+				
+				if(i != columns.length-1)
+					bw.write(",");
+			}//for end
+			bw.newLine();
+		}//while end
+		
+		//寫header
+		bw.write("@relation month\n\n");
+		
+		bw.write("@attribute dates {");
+		for(String each : ls_dates)
+			bw.write(each + ",");
+		bw.write("}\n");
+		
+		bw.write("@attribute category {");
+		for(String each : ls_category)
+			bw.write(each + ",");
+		bw.write("}\n");
+		
+		bw.write("@attribute dayofweek {");
+		for(String each : ls_dayofweek)
+			bw.write(each + ",");
+		bw.write("}\n");
+		
+		bw.write("@attribute pddistrict {");
+		for(String each : ls_pddistrict)
+			bw.write(each + ",");
+		bw.write("}\n");
+		
+		bw.write("@attribute address {");
+		for(String each : ls_address)
+			bw.write(each + ",");
+		bw.write("}\n");
+		
+		bw.write("@attribute X numeric\n");
+		bw.write("@attribute Y numeric\n\n");
+		bw.write("@data\n");
+		
+		br.close();
+		bw.close();
+	
+	}
+}

@@ -1,0 +1,89 @@
+package month;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+public class Month {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("train.csv"));
+		
+		/*-----------------------------------------------------------*/
+		BufferedWriter bw = new BufferedWriter(new FileWriter("month.csv"));
+		/*-----------------------------------------------------------*/
+		
+		//ArrayList用來寫出arff檔的header
+		ArrayList<String> ls_dates = new ArrayList<String>();
+		ArrayList<String> ls_category = new ArrayList<String>();
+		ArrayList<String> ls_dayofweek = new ArrayList<String>();
+		ArrayList<String> ls_pddistrict = new ArrayList<String>();
+		ArrayList<String> ls_address = new ArrayList<String>();
+		
+		String line =br.readLine();
+		bw.write("Dates,Category,DayOfWeek,PdDistrict,Address,X,Y\n");
+		while(br.ready()){
+			line = br.readLine();//each instance/row.
+			String[] columns = line.split(",");
+			
+			for(int i = 0; i < columns.length; i++){
+				switch(i){
+				/*---------------------------------------------------*/
+				case 0://Dates
+					String m = columns[0].split("-")[1];
+					bw.write(m);
+					if(!ls_dates.contains(m))
+						ls_dates.add(m);
+				/*---------------------------------------------------*/
+				case 1://Categroy
+					bw.write(columns[1]);
+					if(!ls_category.contains(columns[1]))
+						ls_category.add(columns[1]);
+					
+				case 2://不要 Descript 和 Resolution
+				case 5:
+					continue;
+					
+				case 3://DayofWeek
+					bw.write(columns[3]);
+					if(!ls_dayofweek.contains(columns[3]))
+						ls_dayofweek.add(columns[3]);
+				
+				case 4://PdDistrict
+					bw.write(columns[4]);
+					if(!ls_pddistrict.contains(columns[4]))
+						ls_pddistrict.add(columns[4]);
+					
+				case 6://Address
+					bw.write(columns[6]);
+					if(!ls_address.contains(columns[6]))
+						ls_address.add(columns[6]);
+						
+				case 7://X
+					bw.write(columns[7]);
+					
+				case 8://Y
+					bw.write(columns[8]);
+					
+				default:
+					System.out.println("!!!! Something wrong!");
+				}
+				bw.write(",");
+			}//for end
+			
+			//寫header
+			bw.write("@relation month");
+			for(String each : ls_dates){
+				
+			}
+			
+		}
+		br.close();
+		bw.close();
+	
+	}
+}

@@ -1,5 +1,2 @@
-raw_test.csv
-raw_train.csv
-sampleSubmission.csv
-./DM/test.csv
-./DM/train.csv
+*.arff
+*.csv
